@@ -1,5 +1,6 @@
 package com.example;
 //Classe que verifica as permissoes
+
 public class ControleDeAcesso {
     // Verifica se o usuario tem uma permissao especifica
     public static boolean temPermissao(Usuario usuario, String nomePermissao) {
@@ -15,7 +16,11 @@ public class ControleDeAcesso {
     // Cria uma nova permissao (somente para gerentes)
     public static Permissao criaPermissao(Usuario usuarioAgindo, String nome) {
         if (temPermissao(usuarioAgindo, "gerenciar_permissoes")) {
-            return new Permissao(nome);
+            if(PermissoesValidas.contem(nome)){
+                return new Permissao(nome);
+            } else {
+                throw new IllegalArgumentException("Usuario tentando criar permissão inválida.");
+            }
         } else {
             throw new SecurityException("Usuário sem permissão para criar permissões.");
         }

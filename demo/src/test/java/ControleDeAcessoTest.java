@@ -1,7 +1,14 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import com.example.*;
+
+import com.example.ControleDeAcesso;
+import com.example.Papel;
+import com.example.Permissao;
+import com.example.Usuario;
 
 public class ControleDeAcessoTest {
 
@@ -73,5 +80,20 @@ public class ControleDeAcessoTest {
         ControleDeAcesso.setPapelUsuario(maria, joao, editor);
         assertTrue(joao.getPapeis().contains(editor));
         assertFalse(joao.getPapeis().contains(viewer));
+    }
+
+    @Test
+    void testCriacaoDePermissaoInvalida() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            ControleDeAcesso.criaPermissao(maria, "delete_all");
+        });
+    }
+
+    @Test
+    void testAtribuicaoDePapelRepetido() {
+        int papeisAntes = joao.getPapeis().size();
+        joao.atribuiPapel(viewer);  // viewer já foi atribuído no setUp
+        int papeisDepois = joao.getPapeis().size();
+        assertEquals(papeisAntes, papeisDepois);
     }
 }
