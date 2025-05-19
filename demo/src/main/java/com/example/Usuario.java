@@ -12,9 +12,11 @@ public class Usuario {
         this.nomeUsuario = nomeUsuario;
     }
 
-    // Atribuição de um papel para o usuario
+    // Atribuição de um papel para o usuario 
     public void atribuiPapel(Papel papel) {
-        papeis.add(papel);
+        if (!papeis.contains(papel)){ //verifica se papel já existe antes de atribuir
+            papeis.add(papel);
+        }
     }
 
     public void removerPapel(Papel papel) {
